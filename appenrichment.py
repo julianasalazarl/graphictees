@@ -4,7 +4,7 @@ import numpy as np
 import io
 
 st.set_page_config(page_title="Product(Shirts) Enrichment Tool")
-st.title("Seasonal Product Enrichment Tool")
+st.title("Shirts Enrichment Tool")
 st.markdown("""
 Upload your Excel file with the Shirts articles. This tool will automatically enrich fields based on material percentage patterns
 and provide a downloadable Excel file with the completed data.
@@ -51,5 +51,6 @@ if uploaded_file:
 
     except Exception as e:
         st.error(f"There was an error processing the file: {e}")
+
 
 
