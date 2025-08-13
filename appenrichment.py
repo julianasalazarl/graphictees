@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import io
+import re
 
 st.set_page_config(page_title="Product(Shirts) Enrichment Tool")
 st.title("Shirts Enrichment Tool")
@@ -23,7 +24,11 @@ def enrich_data(df):
         "T Shirts" if (
             pd.isna(row.get("Bullet3"))
             and any(int(n) >= 70 for n in re.findall(r'(\d+)%\s*cotton', str(row.get("Name", "")).lower()))) else
-        "Short Sleeve Shirts;T Shirts"
+        "Short Sleeve Shirts;T Shirts" if (
+            pd.isna(row.get("Bullet3"))
+            and re.search(r'50%\s*polyester', str(row.get("Name", "")).lower())
+            and re.search(r'50%\s*cotton', str(row.get("Name", "")).lower())) else
+        "Can't analize"
     ), axis=1)
     
     return df
@@ -51,6 +56,7 @@ if uploaded_file:
 
     except Exception as e:
         st.error(f"There was an error processing the file: {e}")
+
 
 
 
