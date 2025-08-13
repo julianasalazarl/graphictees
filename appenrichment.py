@@ -19,15 +19,12 @@ def enrich_data(df):
     # Create the new enriched column based on conditions
     df["Product type shirts"] = df.apply(lambda row: (
         "Short Sleeve Shirts" if (
-            pd.isna(row.get("Bullet3"))
-            and any(int(n) >= 70 for n in re.findall(r'(\d+)%\s*polyester', str(row.get("Name", "")).lower()))) else
+            any(int(n) >= 70 for n in re.findall(r'(\d+)%\s*polyester', str(row.get("Bullet3", "")).lower()))) else
         "T Shirts" if (
-            pd.isna(row.get("Bullet3"))
-            and any(int(n) >= 70 for n in re.findall(r'(\d+)%\s*cotton', str(row.get("Name", "")).lower()))) else
+            any(int(n) >= 70 for n in re.findall(r'(\d+)%\s*cotton', str(row.get("Bullet3", "")).lower()))) else
         "Short Sleeve Shirts;T Shirts" if (
-            pd.isna(row.get("Bullet3"))
-            and re.search(r'50%\s*polyester', str(row.get("Name", "")).lower())
-            and re.search(r'50%\s*cotton', str(row.get("Name", "")).lower())) else
+            re.search(r'50%\s*polyester', str(row.get("Bullet3", "")).lower())
+            and re.search(r'50%\s*cotton', str(row.get("Bullet3", "")).lower())) else
         "Can't analize"
     ), axis=1)
     
@@ -56,6 +53,7 @@ if uploaded_file:
 
     except Exception as e:
         st.error(f"There was an error processing the file: {e}")
+
 
 
 
