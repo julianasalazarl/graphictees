@@ -25,8 +25,8 @@ def enrich_data(df):
         "T Shirts" if (
             any(int(n) >= 70 for n in re.findall(r'(\d+)%\s*cotton', str(row.get("Bullet3", "")).lower()))) else
         "T shirts;Short Sleeve Shirts" if (
-            any(60 <= int(n) <= 65 for n in re.findall(r'(\d+)%\s*polyester', str(row.get("Name", "")).lower()))
-            and any(35 <= int(n) <= 40 for n in re.findall(r'(\d+)%\s*cotton', str(row.get("Name", "")).lower()))) else
+            any(60 <= int(n) <= 65 for n in re.findall(r'(\d+)%\s*polyester', str(row.get("Bullet3", "")).lower()))
+            and any(35 <= int(n) <= 40 for n in re.findall(r'(\d+)%\s*cotton', str(row.get("Bullet3", "")).lower()))) else
         "Can't analize"
     ), axis=1)
     
@@ -55,6 +55,7 @@ if uploaded_file:
 
     except Exception as e:
         st.error(f"There was an error processing the file: {e}")
+
 
 
 
